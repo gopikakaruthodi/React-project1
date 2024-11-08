@@ -1,49 +1,19 @@
 import { useState,useEffect } from 'react'
 import './App.css'
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import Home from './components/Home'
+import Details from './components/Details'
 
 function App() {
-  let [arr,setArr]=useState([])
+  return(
+    <BrowserRouter>
+    <Routes>
+      <Route path='/' Component={Home}/>
+      <Route path='/details/:id' Component={Details}/>
 
-  useEffect(()=>{
-    getData()
-  },[])
-
-  const getData=async()=>{
-    const res=await fetch("https://dummyjson.com/products")
-    const data=await res.json()
-    console.log(data.products);
-    setArr(data.products)
-  }
-
-
-  return (
-    <>
-     <div className="main">
-      <div className="nav">
-        <h3>PRODUCTS INFO</h3>
-        <input type="search" name="" id="" />
-      </div>
-        <div className="left">
-            <div className="cards">
-            {arr.map((prod)=>{return <div className="card">
-                <div className="image">
-                  <img src={prod.thumbnail} alt="" />
-                </div>
-                <div className="content">
-                  <p className="category">{prod.category}</p>
-                  <h4>{prod.title}</h4>
-                  <p className="price">${prod.price}</p>
-                </div>
-                
-              </div>
-            })}
-            </div>
-        </div>
-        <div className="right"></div>
-      </div>
-    </>
+    </Routes>
+    </BrowserRouter>
   )
-}
+ }
 
 export default App
