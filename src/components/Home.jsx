@@ -1,9 +1,10 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
+import '../App.css'
 
-const Home = () => {
+const Home = ({search}) => {
     let [arr,setArr]=useState([])
-    let[cat,setCat]=useState()
+    let[cat,setCat]=useState([])
     let[filter,setFilter]=useState("")
 
     useEffect(()=>{
@@ -21,20 +22,20 @@ const Home = () => {
       console.log(dataCat);
       setCat(dataCat)
     }
+    console.log(cat);
+    
     return (
       <>
        <div className="main">
        
-        <div className="nav">
-          <h3>PRODUCTS INFO</h3>
-          <input type="search" name="" id="" />
-        </div>
-        <div className="categories">
-            <section onClick={()=>setCat("")}>All</section>
-        </div>
+       
           <div className="left">
+            <div className="categories">
+              <section onClick={()=>setCat("")}>All</section>
+              {cat.map((ct)=><section onClick={()=>setFilter(ct.name)} >{ct.name}</section>)}
+          </div>
               <div className="cards">
-              {arr.map((prod)=>{ return <Link to={`/details/${prod.id}`}> <div className="card">
+              {arr.filter((dt)=>dt.title.toLowerCase().includes(search.toLowerCase())).filter((dt)=>dt.category.includes(filter.toLowerCase())).map((prod)=>{ return <Link to={`/details/${prod.id}`}> <div className="card">
                 <div className="image">
                     <img src={prod.thumbnail} alt="" />
                 </div>
